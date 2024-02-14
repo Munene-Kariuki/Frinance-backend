@@ -8,12 +8,12 @@
 		<version>2.0.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.indra.umeme</groupId>
-	<artifactId>umeme</artifactId>
+	<groupId>com.indra.frinance</groupId>
+	<artifactId>frinance</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>umeme-webservice</name>
-	<description>Umeme Web Services</description>
+	<name>frinance-webservice</name>
+	<description>frinance Web Services</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

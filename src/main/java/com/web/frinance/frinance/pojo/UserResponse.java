@@ -7,6 +7,8 @@ public class UserResponse implements Serializable {
     private String member_no ;
     private String first_name ;
     private String last_name ;
+    private String profile ;
+    private String email ;
 
     public String getMember_no() {
         return member_no;
@@ -47,7 +49,4 @@ public class UserResponse implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    private String profile ;
-    private String email ;
 }
