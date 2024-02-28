@@ -1,5 +1,6 @@
 package com.web.frinance.frinance.controllers;
 
+import com.web.frinance.frinance.pojo.LoginPOJO;
 import com.web.frinance.frinance.pojo.MemberRequest;
 import com.web.frinance.frinance.pojo.UserResponse;
 import com.web.frinance.frinance.service.MemberService;
@@ -20,5 +21,9 @@ public class MembersController {
     @RequestMapping( path = "getMemberInfo/", method = RequestMethod.POST)
     public ResponseEntity<?> getMemberInfo(@RequestBody MemberRequest memberRequest) throws Exception {
         return memberService.getMemberInfo(memberRequest.getMember_no());
+    }
+    @RequestMapping( path = "login/", method = RequestMethod.POST)
+    public ResponseEntity<?> login(@RequestBody LoginPOJO loginPOJO) throws Exception {
+        return memberService.login(loginPOJO);
     }
 }
