@@ -3,13 +3,13 @@ package com.web.frinance.frinance.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users", schema = "public")
 public class Users {
     private  String user_modified ;
-    private Date date_modified ;
+    private LocalDateTime date_modified ;
     @Id
     private String member_no ;
     private String first_name ;
@@ -30,11 +30,11 @@ public class Users {
         return member_no;
     }
 
-    public Date getDate_modified() {
+    public LocalDateTime getDate_modified() {
         return date_modified;
     }
 
-    public void setDate_modified(Date date_modified) {
+    public void setDate_modified(LocalDateTime date_modified) {
         this.date_modified = date_modified;
     }
 

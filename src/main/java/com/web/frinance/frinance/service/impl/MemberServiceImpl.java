@@ -4,6 +4,7 @@ import com.web.frinance.frinance.model.Users;
 import com.web.frinance.frinance.model.repository.Users_repository;
 import com.web.frinance.frinance.pojo.ErrorResponse;
 import com.web.frinance.frinance.pojo.LoginPOJO;
+import com.web.frinance.frinance.pojo.UserProfile;
 import com.web.frinance.frinance.pojo.UserResponse;
 import com.web.frinance.frinance.service.MemberService;
 import com.web.frinance.frinance.util.annotation.Facade;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Facade
@@ -71,6 +73,42 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean isCorrectPassword(String databasePassword, String userProvidedPassword) throws Exception {
         return encoder.matches(userProvidedPassword, databasePassword);
+    }
+
+    @Override
+    public ResponseEntity<?> registerNewUser(UserProfile userProfile) throws Exception {
+        boolean passwordMatch = userProfile.getPassword().equals(userProfile.getConfirm_password()) ;
+        if(!passwordMatch) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setErrorCode(422);
+            errorResponse.setErrorMessage("Passwords mismatch");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
+        }
+        List<Users> users  = users_repository.fetchUserInfo(userProfile.getMember_no().toUpperCase());
+        if(!users.isEmpty()) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setErrorCode(422);
+            errorResponse.setErrorMessage("User " + userProfile.getMember_no().toUpperCase() +  " already exists.");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
+        }
+        List<Users> users2  = users_repository.findUserByEmail(userProfile.getEmail().toLowerCase());
+        if(!users2.isEmpty()) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setErrorCode(422);
+            errorResponse.setErrorMessage("User with email " + userProfile.getEmail().toLowerCase() +  " already exists.");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
+        }
+        Users user = new Users() ;
+        user.setMember_no(userProfile.getMember_no());
+        user.setUser_modified("Admin");
+        user.setDate_modified(LocalDateTime.now());
+        user.setEmail(userProfile.getEmail());
+        user.setFirst_name(userProfile.getFirst_name());
+        user.setLast_name(userProfile.getLast_name());
+        user.setProfile(userProfile.getProfile());
+        user.setPassword(encoder.encode(userProfile.getPassword()));
+        users_repository.save(user) ;
+        return  ResponseEntity.status(HttpStatus.OK).body(user) ;
     }
 
 }
