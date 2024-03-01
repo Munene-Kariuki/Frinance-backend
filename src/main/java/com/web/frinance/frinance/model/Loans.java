@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "loans", schema = "public")
 public class Loans {
     private String user_modified ;
     private Date date_modified ;
