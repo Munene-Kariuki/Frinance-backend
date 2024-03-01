@@ -6,6 +6,7 @@ import com.web.frinance.frinance.model.Users;
 import com.web.frinance.frinance.model.repository.Loans_repository;
 import com.web.frinance.frinance.model.repository.Users_repository;
 import com.web.frinance.frinance.pojo.ErrorResponse;
+import com.web.frinance.frinance.pojo.Totals;
 import com.web.frinance.frinance.service.LoansService;
 import com.web.frinance.frinance.util.annotation.Facade;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,24 @@ public class LoansServiceImpl implements LoansService {
         if(users.isEmpty()) {
             ErrorResponse errorResponse = new ErrorResponse();
             errorResponse.setErrorCode(404);
-            errorResponse.setErrorMessage("User does not exist");
+            errorResponse.setErrorMessage("User " + member_no.toUpperCase() + " does not exist");
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
         List<Loans> loans  = loansRepository.fetchUserLoans(member_no.toUpperCase());
         List<Loans> loansArray = new ArrayList<>(loans);
         return ResponseEntity.status(HttpStatus.OK).body(loansArray);
+    }
+
+    @Override
+    public ResponseEntity<?> getTotalLoans(String member_no) throws Exception {
+        List<Users> users  = usersRepository.fetchUserInfo(member_no);
+        if(users.isEmpty()) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setErrorCode(404);
+            errorResponse.setErrorMessage("User " + member_no.toUpperCase() + " does not exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+        List<Totals> totalLoans  = loansRepository.getTotalLoans(member_no.toUpperCase());
+        return ResponseEntity.status(HttpStatus.OK).body(totalLoans);
     }
 }

@@ -20,6 +20,10 @@ public class SharesController {
     public ResponseEntity<?> sharesInfo(@RequestBody MemberRequest memberRequest) throws Exception {
         return sharesService.getShares(memberRequest.getMember_no());
     }
+    @RequestMapping( path = "getTotalShares/", method = RequestMethod.POST)
+    public ResponseEntity<?> getTotalShares(@RequestBody MemberRequest memberRequest) throws Exception {
+        return sharesService.getTotalShares(memberRequest.getMember_no());
+    }
     @RequestMapping( path = "postShares/", method = RequestMethod.POST)
     public ResponseEntity<?> addShares(@RequestBody SharesPOJO sharesPOJO) throws Exception {
         return sharesService.postShares(sharesPOJO);

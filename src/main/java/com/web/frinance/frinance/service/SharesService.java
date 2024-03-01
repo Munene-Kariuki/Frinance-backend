@@ -5,5 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public interface SharesService {
     ResponseEntity<?> getShares(String member_no) throws Exception ;
+    ResponseEntity<?> getTotalShares(String member_no) throws Exception ;
     ResponseEntity<?> postShares(SharesPOJO sharesPOJO) throws Exception ;
 }

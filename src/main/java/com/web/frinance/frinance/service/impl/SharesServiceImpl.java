@@ -41,6 +41,19 @@ public class SharesServiceImpl implements SharesService {
     }
 
     @Override
+    public ResponseEntity<?> getTotalShares(String member_no) throws Exception {
+        List<Users> users  = usersRepository.fetchUserInfo(member_no);
+        if(users.isEmpty()) {
+            ErrorResponse errorResponse = new ErrorResponse();
+            errorResponse.setErrorCode(404);
+            errorResponse.setErrorMessage("User " + member_no + " does not exist");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+        List <Totals> totalShares = sharesRepository.getTotalShares(member_no);
+        return ResponseEntity.status(HttpStatus.OK).body(totalShares);
+    }
+
+    @Override
     public ResponseEntity<?> postShares(SharesPOJO sharesPOJO) throws Exception {
         List<Users> users  = usersRepository.fetchUserInfo(sharesPOJO.getMember_no().toUpperCase());
         if(users.isEmpty()) {

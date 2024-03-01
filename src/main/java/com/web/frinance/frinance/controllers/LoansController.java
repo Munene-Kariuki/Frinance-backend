@@ -16,7 +16,11 @@ public class LoansController {
     @Autowired
     LoansService loansService;
     @RequestMapping( path = "getLoans/", method = RequestMethod.POST)
-    public ResponseEntity<?> sharesInfo(@RequestBody MemberRequest memberRequest) throws Exception {
+    public ResponseEntity<?> loansInfo(@RequestBody MemberRequest memberRequest) throws Exception {
         return loansService.getLoans(memberRequest.getMember_no());
+    }
+    @RequestMapping( path = "getTotalLoans/", method = RequestMethod.POST)
+    public ResponseEntity<?> totalLoans(@RequestBody MemberRequest memberRequest) throws Exception {
+        return loansService.getTotalLoans(memberRequest.getMember_no());
     }
 }
