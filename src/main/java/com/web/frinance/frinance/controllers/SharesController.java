@@ -1,6 +1,7 @@
 package com.web.frinance.frinance.controllers;
 
 import com.web.frinance.frinance.pojo.MemberRequest;
+import com.web.frinance.frinance.pojo.SharesPOJO;
 import com.web.frinance.frinance.service.MemberService;
 import com.web.frinance.frinance.service.SharesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class SharesController {
     @RequestMapping( path = "sharesInfo/", method = RequestMethod.POST)
     public ResponseEntity<?> sharesInfo(@RequestBody MemberRequest memberRequest) throws Exception {
         return sharesService.getShares(memberRequest.getMember_no());
+    }
+    @RequestMapping( path = "postShares/", method = RequestMethod.POST)
+    public ResponseEntity<?> addShares(@RequestBody SharesPOJO sharesPOJO) throws Exception {
+        return sharesService.postShares(sharesPOJO);
     }
 }

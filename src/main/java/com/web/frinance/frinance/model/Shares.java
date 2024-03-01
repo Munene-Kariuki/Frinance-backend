@@ -1,16 +1,15 @@
 package com.web.frinance.frinance.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users", schema = "public")
+@Table(name = "shares", schema = "public")
 public class Shares {
     private String user_modified ;
-    private Date date_modified ;
+    private LocalDateTime date_modified ;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer transaction_id ;
     private String member_no ;
     private Integer amount ;
@@ -23,11 +22,11 @@ public class Shares {
         this.user_modified = user_modified;
     }
 
-    public Date getDate_modified() {
+    public LocalDateTime getDate_modified() {
         return date_modified;
     }
 
-    public void setDate_modified(Date date_modified) {
+    public void setDate_modified(LocalDateTime date_modified) {
         this.date_modified = date_modified;
     }
 
